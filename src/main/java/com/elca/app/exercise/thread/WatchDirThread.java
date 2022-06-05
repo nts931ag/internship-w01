@@ -1,33 +1,36 @@
-package com.elca.app.exercise;
+package com.elca.app.exercise.thread;
 
+import com.elca.app.exercise.ListCompany;
+import com.elca.app.exercise.WatchDir;
+import com.elca.app.exercise.state.EmptyState;
+import com.elca.app.exercise.state.Program;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.IOException;
 import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 import static java.nio.file.StandardWatchEventKinds.*;
-import static java.nio.file.LinkOption.*;
-import java.nio.file.attribute.*;
-import java.io.*;
-import java.util.*;
 
-/**
- * Example to watch a directory (or tree) for changes to files.
- */
-
-public class WatchDir {
-
+public class WatchDirThread extends Thread{
     private final WatchService watcher;
-    private final Map<WatchKey,Path> keys;
+    private final Map<WatchKey, Path> keys;
     private final boolean recursive;
     private String fileName;
     private boolean trace = false;
+    private Program program;
 
     @SuppressWarnings("unchecked")
     static <T> WatchEvent<T> cast(WatchEvent<?> event) {
         return (WatchEvent<T>)event;
     }
 
-    /**
-     * Register the given directory with the WatchService
-     */
-    private void register(Path dir) throws IOException {
+    private void register(Path dir) throws IOException{
         WatchKey key = dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
         if (trace) {
             Path prev = keys.get(key);
@@ -42,10 +45,6 @@ public class WatchDir {
         keys.put(key, dir);
     }
 
-    /**
-     * Register the given directory, and all its sub-directories, with the
-     * WatchService.
-     */
     private void registerAll(final Path start) throws IOException {
         // register directory and sub-directories
         Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
@@ -59,14 +58,14 @@ public class WatchDir {
         });
     }
 
-    /**
-     * Creates a WatchService and registers the given directory
-     */
-    public WatchDir(Path dir, String fileName, boolean recursive) throws IOException {
+    public WatchDirThread(Program program, String fileName, boolean recursive) throws IOException {
         this.watcher = FileSystems.getDefault().newWatchService();
         this.keys = new HashMap<WatchKey,Path>();
         this.recursive = recursive;
         this.fileName = fileName;
+        this.program = program;
+
+        Path dir = this.program.getPath();
 
         if (recursive) {
             System.out.format("Scanning %s ...\n", dir);
@@ -80,9 +79,6 @@ public class WatchDir {
         this.trace = true;
     }
 
-    /**
-     * Process all events for keys queued to the watcher
-     */
     public void processEvents() {
         for (;;) {
 
@@ -119,6 +115,9 @@ public class WatchDir {
                 if(child.getFileName().toString().equals(fileName)){
                     if(event.kind() == ENTRY_MODIFY){
                         System.out.println("modifying...");
+                        this.program.setListCompany(
+                                new ListCompany(this.program.getCsvMiner().readCompaniesFromFile(String.valueOf(child.getFileName())))
+                        );
                     }
                 }
 
@@ -145,7 +144,14 @@ public class WatchDir {
                     break;
                 }
             }
+
+            if(this.program.getState() instanceof EmptyState){
+                System.out.println("End thread");
+                break;
+            }
         }
+
+        System.out.println("End thread");
     }
 
     static void usage() {
@@ -153,24 +159,10 @@ public class WatchDir {
         System.exit(-1);
     }
 
-    public static void main(String[] args) throws IOException {
-//        // parse arguments
-//        if (args.length == 0 || args.length > 2)
-//            usage();
-//        boolean recursive = false;
-//        int dirArg = 0;
-//        if (args[0].equals("-r")) {
-//            if (args.length < 2)
-//                usage();
-//            recursive = true;
-//            dirArg++;
-//        }
-//
-//        // register directory and process its events
-//        Path dir = Paths.get(args[dirArg]);
-//        new WatchDir(dir, recursive).processEvents();
-
-        Path dir = Paths.get("D:\\Elca-workspace\\internship-w01\\src");
-        new WatchDir(dir, "haha.txt", false).processEvents();
+    @Override
+    public void run() {
+        super.run();
+        System.out.println("\nMonitoring...");
+        this.processEvents();
     }
 }

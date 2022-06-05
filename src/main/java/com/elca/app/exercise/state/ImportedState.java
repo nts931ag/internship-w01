@@ -3,6 +3,7 @@ package com.elca.app.exercise.state;
 import com.elca.app.exercise.CsvMiner;
 import com.elca.app.exercise.ListCompany;
 import com.elca.app.exercise.WatchDir;
+import com.elca.app.exercise.thread.WatchDirThread;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -53,6 +54,13 @@ public class ImportedState extends State{
                     break;
                 }
                 case 3: {
+
+                    try {
+                        WatchDirThread watchDirThread = new WatchDirThread(this.program, "companies1.csv", false);
+                        watchDirThread.start();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 }
                 case 4: {
