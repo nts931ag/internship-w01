@@ -12,15 +12,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class ListCompany {
 
-//    private static ListCompany instance;
     private List<Company> lstCompany;
-
-//    public static ListCompany getInstance(List<Company> lstCompany){
-//        if(instance == null){
-//            instance = new ListCompany(lstCompany);
-//        }
-//        return instance;
-//    }
 
     public int calTotalCapitalOfHeadQuarter(String country){
         return lstCompany.stream()

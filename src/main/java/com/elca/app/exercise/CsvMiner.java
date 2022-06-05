@@ -22,7 +22,6 @@ public class CsvMiner extends DataMiner{
 
     public static CsvMiner getInstance(Path path, String delimeter){
         if(instance == null){
-//            instance = new ListCompany(lstCompany);
             instance = new CsvMiner(path, delimeter);
         }
         return instance;

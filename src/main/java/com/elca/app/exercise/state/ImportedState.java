@@ -21,10 +21,10 @@ public class ImportedState extends State{
         int choice;
         do {
             System.out.println("----------Exercise 1----------");
-            System.out.println("1. Output to the console the total capital of headquarters located in “CH”.");
-            System.out.println("2. Output to the console the name of companies that the country is in “CH”. The list is " +
+            System.out.println("1. Output to the console the total capital of headquarters located in \"CH\".");
+            System.out.println("2. Output to the console the name of companies that the country is in \"CH\". The list is " +
                     "sorted descending by capital.");
-            System.out.println("3. Modify your program to monitor a predefined folder “import” for changes. If your " +
+            System.out.println("3. Modify your program to monitor a predefined folder \"import\" for changes. If your " +
                     "program is able to process the file, reimport the file and print out the results in feature #2 and #3.");
             System.out.println("4. Use your program to re-import the following zip file (companies_big_data.zip). " +
                     "Unzip the file with Windows before importing, your program only needs to handle csv file for now");
