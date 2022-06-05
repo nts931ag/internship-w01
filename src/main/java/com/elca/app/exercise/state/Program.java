@@ -16,12 +16,13 @@ public class Program {
     private State state;
     private boolean isImported = false;
     private final Path path = Paths.get("D:\\Elca-workspace\\internship-w01\\src");
+    private String delimeter = ",";
     private ListCompany listCompany;
     private CsvMiner csvMiner;
 
     Program(){
         this.state = new EmptyState(this);
-
+        csvMiner = CsvMiner.getInstance(path, delimeter);
     }
 
     public void start(){
@@ -35,18 +36,12 @@ public class Program {
                     choice = sc.nextInt();
                     if(choice == 1){
                         state.onImport();
-//                        System.out.print("Enter name of file .csv: ");
-//                        sc.nextLine();
-//                        String fileName = sc.nextLine();
-//                        CsvMiner csvMiner = new CsvMiner("D:\\Elca-workspace\\internship-w01\\src\\" + fileName + ".csv", ",");
-//                        ListCompany listCompany = new ListCompany(csvMiner.readCompaniesFromFile());
                     }else{
                         System.out.println(state.onExit());
                     }
 
             }else if(this.getState() instanceof ImportedState){
                 this.state.onManipulate();
-
             }else{
                 break;
             }

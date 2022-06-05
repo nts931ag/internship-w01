@@ -14,8 +14,18 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class CsvMiner extends DataMiner{
 
-    public CsvMiner(Path path, String delimeter){
+    private static CsvMiner instance;
+
+    private CsvMiner(Path path, String delimeter){
         super(path, delimeter);
+    }
+
+    public static CsvMiner getInstance(Path path, String delimeter){
+        if(instance == null){
+//            instance = new ListCompany(lstCompany);
+            instance = new CsvMiner(path, delimeter);
+        }
+        return instance;
     }
 
     @Override

@@ -28,6 +28,7 @@ public class ImportedState extends State{
                     "program is able to process the file, reimport the file and print out the results in feature #2 and #3.");
             System.out.println("4. Use your program to re-import the following zip file (companies_big_data.zip). " +
                     "Unzip the file with Windows before importing, your program only needs to handle csv file for now");
+            System.out.println("5. Print all list company has been imported.");
             System.out.println("0. Exit the program.");
             System.out.println();
 
@@ -35,50 +36,43 @@ public class ImportedState extends State{
             choice = sc.nextInt();
             sc.nextLine();
             switch (choice){
-                case 0: break;
+                case 0: {
+                    System.out.println(this.onExit());
+                    break;
+                }
                 case 1: {
-                    System.out.print("Enter name file .csv: ");
-                    String fileName = sc.nextLine();
-                    CsvMiner csvMiner = new CsvMiner(Paths.get("D:\\Elca-workspace\\internship-w01\\src"), ",");
-//                    ListCompany listCompany = ListCompany.getInstance(csvMiner.readCompaniesFromFile());
-//                    System.out.println(listCompany.calTotalCapitalOfHeadQuarter("CH"));
+                    System.out.println("Total capital of headquarters located in \"CH\": "
+                            + this.program.getListCompany().calTotalCapitalOfHeadQuarter("CH"));
                     break;
                 }
                 case 2: {
-                    System.out.print("Enter name file .csv: ");
-                    String fileName = sc.nextLine();
-                    CsvMiner csvMiner = new CsvMiner(Paths.get("D:\\Elca-workspace\\internship-w01\\src"), ",");
-//                    ListCompany listCompany = ListCompany.getInstance(csvMiner.readCompaniesFromFile());
-//                    listCompany.getListNameOfCompanyAtCountry("CH").stream().forEach(System.out::println);
+                    System.out.println("List company locate at country \"CH\": ");
+                    this.program.getListCompany().getListNameOfCompanyAtCountry("CH").stream().forEach(
+                            System.out::println
+                    );
                     break;
                 }
                 case 3: {
-                    Path path = Paths.get("D:\\Elca-workspace\\internship-w01\\src");
-                    System.out.print("Enter file name for monitor for changes: ");
-                    String nameFile = sc.nextLine();
-                    try {
-                        WatchDir watchDir = new WatchDir(path, nameFile, false);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
                     break;
                 }
                 case 4: {
-                    System.out.print("Enter name file .csv: ");
-                    String fileName = sc.nextLine();
-                    CsvMiner csvMiner = new CsvMiner(Paths.get("D:\\Elca-workspace\\internship-w01\\src"),",");
-//                    ListCompany listCompany = ListCompany.getInstance(csvMiner.readCompaniesFromFile());
-//                    listCompany.printAllCompany();
+                    this.program.setState(new EmptyState(this.program));
+                    break;
+                }
+                case 5: {
+                    System.out.println("List company: ");
+//                    this.program.getListCompany().printAllCompany();
+                    for(int i = 0; i< this.program.getListCompany().getLstCompany().size(); ++i){
+                        System.out.println(i + " " +this.program.getListCompany().getLstCompany().get(i));
+                    }
                     break;
                 }
                 default:{
-                    System.out.println("default");
+                    System.out.println("wrong syntax, Enter exactly one option!!!");
                     break;
                 }
             }
-        }while (choice != 0);
-        this.program.setState(null);
+        }while (choice != 0 && choice != 4);
         return null;
     }
 
@@ -93,8 +87,4 @@ public class ImportedState extends State{
         return "data already imported";
     }
 
-    @Override
-    public String onReimport() {
-        return "data has been reimported";
-    }
 }
