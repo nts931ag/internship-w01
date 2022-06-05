@@ -1,12 +1,8 @@
 package com.elca.app.exercise.thread;
 
 import com.elca.app.exercise.ListCompany;
-import com.elca.app.exercise.WatchDir;
 import com.elca.app.exercise.state.EmptyState;
 import com.elca.app.exercise.state.Program;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -109,12 +105,12 @@ public class WatchDirThread extends Thread{
                 Path name = ev.context();
                 Path child = dir.resolve(name);
 
-                // print out event
-                System.out.format("%s: %s\n", event.kind().name(), child);
+//                // print out event
+//                System.out.format("%s: %s\n", event.kind().name(), child);
 
                 if(child.getFileName().toString().equals(fileName)){
                     if(event.kind() == ENTRY_MODIFY){
-                        System.out.println("modifying...");
+                        System.out.println("\ndata has been ReImported");
                         this.program.setListCompany(
                                 new ListCompany(this.program.getCsvMiner().readCompaniesFromFile(String.valueOf(child.getFileName())))
                         );

@@ -1,13 +1,8 @@
 package com.elca.app.exercise.state;
 
-import com.elca.app.exercise.CsvMiner;
-import com.elca.app.exercise.ListCompany;
-import com.elca.app.exercise.WatchDir;
 import com.elca.app.exercise.thread.WatchDirThread;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class ImportedState extends State{
