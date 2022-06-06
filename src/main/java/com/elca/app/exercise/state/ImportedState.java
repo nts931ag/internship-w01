@@ -1,5 +1,6 @@
 package com.elca.app.exercise.state;
 
+import com.elca.app.exercise.model.Program;
 import com.elca.app.exercise.thread.WatchDirThread;
 
 import java.io.IOException;
@@ -7,7 +8,7 @@ import java.util.Scanner;
 
 public class ImportedState extends State{
 
-    ImportedState(Program program){
+    public ImportedState(Program program){
         super(program);
     }
 

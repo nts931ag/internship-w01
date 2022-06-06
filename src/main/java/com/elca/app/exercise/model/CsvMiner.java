@@ -1,5 +1,6 @@
-package com.elca.app.exercise;
+package com.elca.app.exercise.model;
 
+import com.elca.app.exercise.template.DataMiner;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
-public class CsvMiner extends DataMiner{
+public class CsvMiner extends DataMiner {
 
     private static CsvMiner instance;
 

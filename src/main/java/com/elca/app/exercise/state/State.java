@@ -1,6 +1,6 @@
 package com.elca.app.exercise.state;
 
-import com.elca.app.exercise.CsvMiner;
+import com.elca.app.exercise.model.Program;
 
 public abstract class State {
     Program program;

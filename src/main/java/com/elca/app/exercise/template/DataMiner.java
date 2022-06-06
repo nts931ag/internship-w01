@@ -1,18 +1,17 @@
-package com.elca.app.exercise;
+package com.elca.app.exercise.template;
 
 
+import com.elca.app.exercise.model.Company;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 @Data
 @NoArgsConstructor

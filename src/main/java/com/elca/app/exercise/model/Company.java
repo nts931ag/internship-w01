@@ -1,4 +1,4 @@
-package com.elca.app.exercise;
+package com.elca.app.exercise.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

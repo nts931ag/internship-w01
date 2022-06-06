@@ -1,5 +1,6 @@
-package com.elca.app.exercise;
+package com.elca.app.exercise.model;
 
+import com.elca.app.exercise.model.Company;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,15 +1,14 @@
 package com.elca.app.exercise.state;
 
-import com.elca.app.exercise.Company;
-import com.elca.app.exercise.CsvMiner;
-import com.elca.app.exercise.ListCompany;
+import com.elca.app.exercise.model.CsvMiner;
+import com.elca.app.exercise.model.ListCompany;
+import com.elca.app.exercise.model.Program;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class EmptyState extends State{
 
-    EmptyState(Program program){
+    public EmptyState(Program program){
         super(program);
     }
 

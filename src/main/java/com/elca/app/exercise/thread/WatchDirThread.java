@@ -1,8 +1,8 @@
 package com.elca.app.exercise.thread;
 
-import com.elca.app.exercise.ListCompany;
+import com.elca.app.exercise.model.ListCompany;
 import com.elca.app.exercise.state.EmptyState;
-import com.elca.app.exercise.state.Program;
+import com.elca.app.exercise.model.Program;
 
 import java.io.IOException;
 import java.nio.file.*;
