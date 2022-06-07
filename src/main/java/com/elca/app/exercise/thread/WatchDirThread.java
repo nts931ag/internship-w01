@@ -3,13 +3,11 @@ package com.elca.app.exercise.thread;
 import com.elca.app.exercise.model.ListCompany;
 import com.elca.app.exercise.state.EmptyState;
 import com.elca.app.exercise.model.Program;
-
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
 import java.util.Map;
-
 import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 import static java.nio.file.StandardWatchEventKinds.*;
 

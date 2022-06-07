@@ -1,18 +1,12 @@
 package com.elca.app.exercise.model;
 
 import com.elca.app.exercise.template.DataMiner;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.io.BufferedReader;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Data
-@NoArgsConstructor
 public class CsvMiner extends DataMiner {
 
     private static CsvMiner instance;
@@ -55,4 +49,12 @@ public class CsvMiner extends DataMiner {
             );
         }
     };
+
+    public static CsvMiner getInstance() {
+        return instance;
+    }
+
+    public static void setInstance(CsvMiner instance) {
+        CsvMiner.instance = instance;
+    }
 }

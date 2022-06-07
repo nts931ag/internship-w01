@@ -2,7 +2,6 @@ package com.elca.app.exercise.state;
 
 import com.elca.app.exercise.model.Program;
 import com.elca.app.exercise.thread.WatchDirThread;
-
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -52,7 +51,7 @@ public class ImportedState extends State{
                 case 3: {
 
                     try {
-                        WatchDirThread watchDirThread = new WatchDirThread(this.program, "companies1.csv", false);
+                        WatchDirThread watchDirThread = new WatchDirThread(this.program, "companies.csv", false);
                         watchDirThread.start();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -65,10 +64,7 @@ public class ImportedState extends State{
                 }
                 case 5: {
                     System.out.println("List company: ");
-//                    this.program.getListCompany().printAllCompany();
-                    for(int i = 0; i< this.program.getListCompany().getLstCompany().size(); ++i){
-                        System.out.println(i + " " +this.program.getListCompany().getLstCompany().get(i));
-                    }
+                    this.program.getListCompany().printAllCompany();
                     break;
                 }
                 default:{

@@ -3,20 +3,14 @@ package com.elca.app.exercise.model;
 import com.elca.app.exercise.state.EmptyState;
 import com.elca.app.exercise.state.ImportedState;
 import com.elca.app.exercise.state.State;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-@Data
-@AllArgsConstructor
 public class Program {
     private State state;
     private boolean isImported = false;
-    private final Path path = Paths.get("C:\\Users\\NGUS\\intellij-workspace\\internship-w01\\src");
+    private final Path path = Paths.get("D:\\Elca-workspace\\internship-w01\\src");
     private String delimeter = ",";
     private ListCompany listCompany;
     private CsvMiner csvMiner;
@@ -31,10 +25,8 @@ public class Program {
         int choice;
         while(true){
 
-
-
-            if(this.getState() instanceof EmptyState){
-
+            switch (this.getState()){
+                case EmptyState es -> {
                     System.out.print("Your program has not data. Please import data: ");
                     System.out.println("1. Import\t 2. Exit");
                     choice = sc.nextInt();
@@ -43,15 +35,61 @@ public class Program {
                     }else{
                         System.out.println(state.onExit());
                     }
+                    break;
+                }
+                case ImportedState is ->{
+                    this.state.onManipulate();
+                    break;
+                }
+                default -> {
+                    break;
 
-            }else if(this.getState() instanceof ImportedState){
-                this.state.onManipulate();
-            }else{
-                break;
+                }
             }
         }
-
-        sc.close();
     }
 
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public boolean isImported() {
+        return isImported;
+    }
+
+    public void setImported(boolean imported) {
+        isImported = imported;
+    }
+
+    public Path getPath() {
+        return path;
+    }
+
+    public String getDelimeter() {
+        return delimeter;
+    }
+
+    public void setDelimeter(String delimeter) {
+        this.delimeter = delimeter;
+    }
+
+    public ListCompany getListCompany() {
+        return listCompany;
+    }
+
+    public void setListCompany(ListCompany listCompany) {
+        this.listCompany = listCompany;
+    }
+
+    public CsvMiner getCsvMiner() {
+        return csvMiner;
+    }
+
+    public void setCsvMiner(CsvMiner csvMiner) {
+        this.csvMiner = csvMiner;
+    }
 }
