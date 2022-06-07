@@ -2,9 +2,6 @@ package com.elca.app.exercise.template;
 
 
 import com.elca.app.exercise.model.Company;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -13,9 +10,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public abstract class DataMiner {
     protected Path path;
     protected String delimeter;
@@ -24,16 +18,7 @@ public abstract class DataMiner {
 
         List<Company> lstCompany = new ArrayList<>();
         try {
-            //parsing a CSV file into BufferedReader class constructor
             BufferedReader br = new BufferedReader(new FileReader(path.toString()+"\\"+fileName));
-            String line;
-//            line = br.readLine();
-//            while ((line = br.readLine()) != null)
-//            //returns a Boolean value
-//            {
-//
-//                lstCompany.add(handleData(line));
-//            }
             lstCompany = handleData(br);
             br.close();
         }
@@ -44,4 +29,28 @@ public abstract class DataMiner {
     }
 
     public abstract List<Company> handleData(BufferedReader br);
+
+    public DataMiner() {
+    }
+
+    public DataMiner(Path path, String delimeter) {
+        this.path = path;
+        this.delimeter = delimeter;
+    }
+
+    public Path getPath() {
+        return path;
+    }
+
+    public void setPath(Path path) {
+        this.path = path;
+    }
+
+    public String getDelimeter() {
+        return delimeter;
+    }
+
+    public void setDelimeter(String delimeter) {
+        this.delimeter = delimeter;
+    }
 }

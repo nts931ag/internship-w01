@@ -1,23 +1,30 @@
 package com.elca.app.exercise.model;
 
-import com.elca.app.exercise.model.Company;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class ListCompany {
 
     private List<Company> lstCompany;
 
+    public ListCompany() {
+    }
+
+    public ListCompany(List<Company> lstCompany) {
+        this.lstCompany = lstCompany;
+    }
+
+    public List<Company> getLstCompany() {
+        return lstCompany;
+    }
+
+    public void setLstCompany(List<Company> lstCompany) {
+        this.lstCompany = lstCompany;
+    }
+
     public int calTotalCapitalOfHeadQuarter(String country){
         return lstCompany.stream()
-                .filter(e -> e.getIsHeadQuarter() != null && e.getIsHeadQuarter() == true && e.getCountry().equals(country))
+                .filter(e -> e.getHeadQuarter() != null && e.getHeadQuarter() == true && e.getCountry().equals(country))
                 .map(e -> e.getCapital())
                 .reduce(0, Integer::sum);
     }

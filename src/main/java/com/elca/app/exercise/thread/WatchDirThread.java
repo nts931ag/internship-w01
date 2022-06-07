@@ -105,9 +105,6 @@ public class WatchDirThread extends Thread{
                 Path name = ev.context();
                 Path child = dir.resolve(name);
 
-//                // print out event
-//                System.out.format("%s: %s\n", event.kind().name(), child);
-
                 if(child.getFileName().toString().equals(fileName)){
                     if(event.kind() == ENTRY_MODIFY){
                         System.out.println("\ndata has been ReImported");

@@ -15,6 +15,7 @@ public class ImportedState extends State{
     @Override
     public String onManipulate() {
         Scanner sc = new Scanner(System.in);
+//        Scanner sc = InputUtils.scanner;
         int choice;
         do {
             System.out.println("----------Exercise 1----------");
@@ -33,50 +34,48 @@ public class ImportedState extends State{
             choice = sc.nextInt();
             sc.nextLine();
             switch (choice){
-                case 0: {
+                case 0 -> {
                     System.out.println(this.onExit());
                     break;
                 }
-                case 1: {
+                case 1 -> {
                     System.out.println("Total capital of headquarters located in \"CH\": "
                             + this.program.getListCompany().calTotalCapitalOfHeadQuarter("CH"));
                     break;
                 }
-                case 2: {
+                case 2 -> {
                     System.out.println("List company locate at country \"CH\": ");
                     this.program.getListCompany().getListNameOfCompanyAtCountry("CH").stream().forEach(
                             System.out::println
                     );
                     break;
                 }
-                case 3: {
+                case 3 -> {
 
                     try {
-                        WatchDirThread watchDirThread = new WatchDirThread(this.program, "companies1.csv", false);
+                        WatchDirThread watchDirThread = new WatchDirThread(this.program, "companies_big_data.csv", false);
                         watchDirThread.start();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     break;
                 }
-                case 4: {
+                case 4 -> {
                     this.program.setState(new EmptyState(this.program));
                     break;
                 }
-                case 5: {
+                case 5 -> {
                     System.out.println("List company: ");
-//                    this.program.getListCompany().printAllCompany();
-                    for(int i = 0; i< this.program.getListCompany().getLstCompany().size(); ++i){
-                        System.out.println(i + " " +this.program.getListCompany().getLstCompany().get(i));
-                    }
+                    this.program.getListCompany().printAllCompany();
                     break;
                 }
-                default:{
+                default -> {
                     System.out.println("wrong syntax, Enter exactly one option!!!");
                     break;
                 }
             }
         }while (choice != 0 && choice != 4);
+//        sc.close();
         return null;
     }
 
