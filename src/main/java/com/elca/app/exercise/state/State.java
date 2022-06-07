@@ -9,7 +9,6 @@ public abstract class State {
         this.program = program;
     }
 
-
     public abstract String onManipulate();
     public abstract String onExit();
     public abstract String onImport();

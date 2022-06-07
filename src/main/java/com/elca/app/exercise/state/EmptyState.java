@@ -25,11 +25,15 @@ public class EmptyState extends State{
 
     @Override
     public String onImport() {
-        Scanner sc = new Scanner(System.in);
-        CsvMiner csvMiner = this.program.getCsvMiner();
-        System.out.print("Enter your file name: ");
-        this.program.setListCompany(new ListCompany(csvMiner.readCompaniesFromFile(sc.nextLine() + ".csv")));
-        this.program.setState(new ImportedState(this.program));
+
+
+        try (Scanner sc = new Scanner(System.in);){
+            CsvMiner csvMiner = this.program.getCsvMiner();
+            System.out.print("Enter your file name: ");
+
+            this.program.setListCompany(new ListCompany(csvMiner.readCompaniesFromFile(sc.nextLine() + ".csv")));
+            this.program.setState(new ImportedState(this.program));
+        }
         return "data has been imported";
     }
 

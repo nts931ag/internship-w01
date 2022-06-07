@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -27,31 +28,27 @@ public class Program {
     }
 
     public void start(){
-        Scanner sc = new Scanner(System.in);
-        int choice;
-        while(true){
 
-
-
-            if(this.getState() instanceof EmptyState){
-
+        try(Scanner sc = new Scanner(System.in);){
+            int choice;
+            while(true){
+                if(this.getState() instanceof EmptyState){
                     System.out.print("Your program has not data. Please import data: ");
                     System.out.println("1. Import\t 2. Exit");
                     choice = sc.nextInt();
                     if(choice == 1){
+                        System.out.println();
                         state.onImport();
                     }else{
                         System.out.println(state.onExit());
                     }
 
-            }else if(this.getState() instanceof ImportedState){
-                this.state.onManipulate();
-            }else{
-                break;
+                }else if(this.getState() instanceof ImportedState){
+                    this.state.onManipulate();
+                }else{
+                    break;
+                }
             }
         }
-
-        sc.close();
     }
-
 }

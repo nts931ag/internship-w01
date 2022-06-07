@@ -23,23 +23,14 @@ public abstract class DataMiner {
     public List<Company> readCompaniesFromFile(String fileName){
 
         List<Company> lstCompany = new ArrayList<>();
-        try {
-            //parsing a CSV file into BufferedReader class constructor
-            BufferedReader br = new BufferedReader(new FileReader(path.toString()+"\\"+fileName));
-            String line;
-//            line = br.readLine();
-//            while ((line = br.readLine()) != null)
-//            //returns a Boolean value
-//            {
-//
-//                lstCompany.add(handleData(line));
-//            }
+
+        try(BufferedReader br = new BufferedReader(new FileReader(path.toString()+"\\"+fileName));){
             lstCompany = handleData(br);
-            br.close();
-        }
-        catch(IOException ioe) {
+
+        }catch (IOException ioe){
             System.out.println("File is not existed");
         }
+
         return lstCompany;
     }
 
