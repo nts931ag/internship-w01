@@ -147,10 +147,6 @@ public class WatchDirThread extends Thread{
         System.out.println("End thread");
     }
 
-    static void usage() {
-        System.err.println("usage: java WatchDir [-r] dir");
-        System.exit(-1);
-    }
 
     @Override
     public void run() {
