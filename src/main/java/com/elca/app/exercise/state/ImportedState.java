@@ -20,11 +20,9 @@ public class ImportedState extends State{
             System.out.println("1. Output to the console the total capital of headquarters located in \"CH\".");
             System.out.println("2. Output to the console the name of companies that the country is in \"CH\". The list is " +
                     "sorted descending by capital.");
-            System.out.println("3. Modify your program to monitor a predefined folder \"import\" for changes. If your " +
-                    "program is able to process the file, reimport the file and print out the results in feature #2 and #3.");
-            System.out.println("4. Use your program to re-import the following zip file (companies_big_data.zip). " +
+            System.out.println("3. Use your program to re-import the following zip file (companies_big_data.zip). " +
                     "Unzip the file with Windows before importing, your program only needs to handle csv file for now");
-            System.out.println("5. Print all list company has been imported.");
+            System.out.println("4. Print all list company has been imported.");
             System.out.println("0. Exit the program.");
             System.out.println();
 
@@ -51,23 +49,13 @@ public class ImportedState extends State{
                 }
                 case 3 -> {
 
-                    try {
-                        WatchDirThread watchDirThread = new WatchDirThread(this.program, false);
-                        watchDirThread.start();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    break;
-                }
-                case 4 -> {
-
                     this.program.getCsvMiner().setPath(
                             this.program.getPath()
                     );
                     this.program.setState(new EmptyState(this.program));
                     break;
                 }
-                case 5 -> {
+                case 4 -> {
                     System.out.println("List company: ");
                     this.program.getListCompany().printAllCompany();
                     break;
@@ -77,7 +65,7 @@ public class ImportedState extends State{
                     break;
                 }
             }
-        }while (choice != 0 && choice != 4);
+        }while (choice != 0 && choice != 3);
         return null;
     }
 

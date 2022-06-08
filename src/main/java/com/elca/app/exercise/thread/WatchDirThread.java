@@ -27,7 +27,7 @@ public class WatchDirThread extends Thread{
     }
 
     private void register(Path dir) throws IOException{
-        WatchKey key = dir.register(watcher, ENTRY_DELETE, ENTRY_MODIFY);
+        WatchKey key = dir.register(watcher, ENTRY_MODIFY);
         if (trace) {
             Path prev = keys.get(key);
             if (prev == null) {
@@ -62,7 +62,6 @@ public class WatchDirThread extends Thread{
 
         var dir = this.program.getPath().getParent();
         this.fileName = this.program.getPath().getFileName().toString();
-        System.out.println(this.fileName);
         if (recursive) {
             System.out.format("Scanning %s ...\n", dir);
             registerAll(dir);
@@ -84,6 +83,10 @@ public class WatchDirThread extends Thread{
             try {
 //                key = watcher.take();
                 key = watcher.poll(25, TimeUnit.MILLISECONDS);
+                if(this.program.getState() == null ){
+                    System.out.println("End thread is watching file: " + this.fileName);
+                    break;
+                }
             } catch (InterruptedException x) {
                 return;
             }
@@ -116,20 +119,15 @@ public class WatchDirThread extends Thread{
                     switch (event.kind().toString()){
                         case "ENTRY_MODIFY" -> {
                             try {
-                                Thread.sleep(2000);
+                                Thread.sleep(1500);
                             } catch (InterruptedException e) {
                                 throw new RuntimeException(e);
                             }
+
                             this.program.setListCompany(
                                     new ListCompany(this.program.getCsvMiner().readCompaniesFromFile(this.program.getPath().toFile()))
                             );
 
-                            break;
-                        }
-                        case "ENTRY_DELETE" -> {
-//                            System.out.println("File has been deleted!!!");
-//                            this.program.setState(new EmptyState(this.program));
-                            this.program.setState(null);
                             break;
                         }
                     }

@@ -3,6 +3,9 @@ package com.elca.app.exercise.model;
 import com.elca.app.exercise.state.EmptyState;
 import com.elca.app.exercise.state.ImportedState;
 import com.elca.app.exercise.state.State;
+import com.elca.app.exercise.thread.WatchDirThread;
+
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -36,6 +39,14 @@ public class Program {
                         System.out.print("Enter path to filename (ex: C:\\User\\app\\myFile.csv): ");
                         String pathFile = sc.nextLine();
                         state.onImport(pathFile);
+
+                        try {
+                            new WatchDirThread(this,false).start();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+
+
                     }else{
                         System.out.println(state.onExit());
                     }
