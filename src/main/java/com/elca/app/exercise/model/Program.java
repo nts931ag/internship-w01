@@ -47,6 +47,7 @@ public class Program {
                 }
             }
         }
+        sc.close();
     }
 
     public State getState() {

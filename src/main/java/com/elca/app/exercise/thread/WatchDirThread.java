@@ -8,6 +8,8 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
 import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 import static java.nio.file.StandardWatchEventKinds.*;
 
@@ -25,7 +27,7 @@ public class WatchDirThread extends Thread{
     }
 
     private void register(Path dir) throws IOException{
-        WatchKey key = dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
+        WatchKey key = dir.register(watcher, ENTRY_DELETE, ENTRY_MODIFY);
         if (trace) {
             Path prev = keys.get(key);
             if (prev == null) {
@@ -59,9 +61,7 @@ public class WatchDirThread extends Thread{
         this.program = program;
 
         Path dir = this.program.getPath();
-//        this.fileName = this.program.getCsvMiner().getPath().getFileName().toString();
         this.fileName = this.program.getCsvMiner().getPath().getFileName().toString();
-        System.out.println(fileName);
         if (recursive) {
             System.out.format("Scanning %s ...\n", dir);
             registerAll(dir);
@@ -79,17 +79,23 @@ public class WatchDirThread extends Thread{
 
             // wait for key to be signalled
             WatchKey key;
+
             try {
-                key = watcher.take();
+//                key = watcher.take();
+                key = watcher.poll(25, TimeUnit.MILLISECONDS);
             } catch (InterruptedException x) {
                 return;
             }
 
             Path dir = keys.get(key);
             if (dir == null) {
-                System.err.println("WatchKey not recognized!!");
+                if(this.program.getState() instanceof EmptyState ){
+                    System.out.println("End thread is watching file: " + this.fileName);
+                    break;
+                }
                 continue;
             }
+
 
             for (WatchEvent<?> event: key.pollEvents()) {
                 WatchEvent.Kind kind = event.kind();
@@ -105,16 +111,25 @@ public class WatchDirThread extends Thread{
                 Path child = dir.resolve(name);
 
                 if(child.getFileName().toString().equals(fileName)){
+//                    System.out.println(event.kind().toString() + "1");
                     switch (event.kind().toString()){
                         case "ENTRY_MODIFY" -> {
+                            try {
+                                Thread.sleep(2000);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
                             this.program.setListCompany(
                                     new ListCompany(this.program.getCsvMiner().readCompaniesFromFile(""))
                             );
+
                             System.out.println("\ndata has been ReImported");
                             break;
                         }
                         case "ENTRY_DELETE" -> {
-
+//                            System.out.println("File has been deleted!!!");
+//                            this.program.setState(new EmptyState(this.program));
+                            this.program.setState(null);
                             break;
                         }
                     }
@@ -143,11 +158,6 @@ public class WatchDirThread extends Thread{
                     break;
                 }
             }
-
-            if(this.program.getState() instanceof EmptyState){
-                System.out.println("End thread");
-                break;
-            }
         }
 
     }
@@ -156,7 +166,7 @@ public class WatchDirThread extends Thread{
     @Override
     public void run() {
         super.run();
-        System.out.println("\nMonitoring...");
         this.processEvents();
+        System.out.println("\nMonitoring...");
     }
 }

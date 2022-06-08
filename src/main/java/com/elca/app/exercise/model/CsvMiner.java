@@ -26,7 +26,7 @@ public class CsvMiner extends DataMiner {
     }
 
     @Override
-    synchronized public List<Company> handleData(BufferedReader br) {
+    public List<Company> handleData(BufferedReader br) {
         return br.lines().parallel().skip(1).map(mapToItem).collect(Collectors.toList());
     }
 

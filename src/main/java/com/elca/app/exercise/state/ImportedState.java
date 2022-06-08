@@ -31,6 +31,7 @@ public class ImportedState extends State{
             System.out.print("Enter your option: ");
             choice = sc.nextInt();
             sc.nextLine();
+//            WatchDirThread watchDirThread = null;
             switch (choice){
                 case 0 -> {
                     System.out.println(this.onExit());
@@ -54,11 +55,12 @@ public class ImportedState extends State{
                         WatchDirThread watchDirThread = new WatchDirThread(this.program, false);
                         watchDirThread.start();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        throw new RuntimeException(e);
                     }
                     break;
                 }
                 case 4 -> {
+
                     this.program.getCsvMiner().setPath(
                             this.program.getPath()
                     );
