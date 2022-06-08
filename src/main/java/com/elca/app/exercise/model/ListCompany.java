@@ -1,5 +1,4 @@
 package com.elca.app.exercise.model;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -7,18 +6,7 @@ public class ListCompany {
 
     private List<Company> lstCompany;
 
-    public ListCompany() {
-    }
-
     public ListCompany(List<Company> lstCompany) {
-        this.lstCompany = lstCompany;
-    }
-
-    public List<Company> getLstCompany() {
-        return lstCompany;
-    }
-
-    public void setLstCompany(List<Company> lstCompany) {
         this.lstCompany = lstCompany;
     }
 
@@ -38,5 +26,13 @@ public class ListCompany {
 
     public void printAllCompany(){
         lstCompany.stream().forEach(System.out::println);
+    }
+
+    public List<Company> getLstCompany() {
+        return lstCompany;
+    }
+
+    public void setLstCompany(List<Company> lstCompany) {
+        this.lstCompany = lstCompany;
     }
 }

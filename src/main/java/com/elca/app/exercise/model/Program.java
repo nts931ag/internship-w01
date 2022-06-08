@@ -3,7 +3,6 @@ package com.elca.app.exercise.model;
 import com.elca.app.exercise.state.EmptyState;
 import com.elca.app.exercise.state.ImportedState;
 import com.elca.app.exercise.state.State;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -11,7 +10,7 @@ import java.util.Scanner;
 public class Program {
     private State state;
     private boolean isImported = false;
-    private final Path path = Paths.get("C:\\Users\\NGUS\\intellij-workspace\\internship-w01\\src");
+    private final Path path = Paths.get("D:\\Elca-workspace\\internship-w01\\src");
     private String delimeter = ",";
     private ListCompany listCompany;
     private CsvMiner csvMiner;
@@ -23,7 +22,6 @@ public class Program {
 
     public void start(){
         Scanner sc = new Scanner(System.in);
-//        Scanner sc = InputUtils.scanner;
         int choice;
         while(true){
 
@@ -37,9 +35,11 @@ public class Program {
                     }else{
                         System.out.println(state.onExit());
                     }
+                    break;
                 }
-                case ImportedState is -> {
+                case ImportedState is ->{
                     this.state.onManipulate();
+                    break;
                 }
                 default -> {
                     break;
@@ -47,8 +47,6 @@ public class Program {
                 }
             }
         }
-
-//        sc.close();
     }
 
     public State getState() {
@@ -94,5 +92,4 @@ public class Program {
     public void setCsvMiner(CsvMiner csvMiner) {
         this.csvMiner = csvMiner;
     }
-
 }

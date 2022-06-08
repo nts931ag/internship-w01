@@ -1,7 +1,6 @@
 package com.elca.app.exercise.model;
 
 import com.elca.app.exercise.template.DataMiner;
-
 import java.io.BufferedReader;
 import java.nio.file.Path;
 import java.util.List;
@@ -50,4 +49,12 @@ public class CsvMiner extends DataMiner {
             );
         }
     };
+
+    public static CsvMiner getInstance() {
+        return instance;
+    }
+
+    public static void setInstance(CsvMiner instance) {
+        CsvMiner.instance = instance;
+    }
 }

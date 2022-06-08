@@ -1,6 +1,5 @@
 package com.elca.app.exercise.model;
 
-
 public class Company {
     private int id;
     private String name;
@@ -19,6 +18,18 @@ public class Company {
         this.capital = capital;
         this.country = country;
         this.isHeadQuarter = isHeadQuarter;
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", Date='" + Date + '\'' +
+                ", capital=" + capital +
+                ", country='" + country + '\'' +
+                ", isHeadQuarter=" + isHeadQuarter +
+                '}';
     }
 
     public int getId() {
@@ -67,17 +78,5 @@ public class Company {
 
     public void setHeadQuarter(Boolean headQuarter) {
         isHeadQuarter = headQuarter;
-    }
-
-    @Override
-    public String toString() {
-        return "Company{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", Date='" + Date + '\'' +
-                ", capital=" + capital +
-                ", country='" + country + '\'' +
-                ", isHeadQuarter=" + isHeadQuarter +
-                '}';
     }
 }
