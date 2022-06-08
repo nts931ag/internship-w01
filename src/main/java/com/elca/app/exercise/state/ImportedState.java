@@ -13,7 +13,7 @@ public class ImportedState extends State{
 
     @Override
     public String onManipulate() {
-        Scanner sc = new Scanner(System.in);
+        var sc = new Scanner(System.in);
         int choice;
         do {
             System.out.println("----------Exercise 1----------");
@@ -88,7 +88,7 @@ public class ImportedState extends State{
     }
 
     @Override
-    public String onImport() {
+    public String onImport(String filePath) {
         return "data already imported";
     }
 

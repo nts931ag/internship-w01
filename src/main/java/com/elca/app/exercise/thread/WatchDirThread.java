@@ -60,8 +60,9 @@ public class WatchDirThread extends Thread{
         this.recursive = recursive;
         this.program = program;
 
-        Path dir = this.program.getPath();
-        this.fileName = this.program.getCsvMiner().getPath().getFileName().toString();
+        var dir = this.program.getPath().getParent();
+        this.fileName = this.program.getPath().getFileName().toString();
+        System.out.println(this.fileName);
         if (recursive) {
             System.out.format("Scanning %s ...\n", dir);
             registerAll(dir);
@@ -120,10 +121,9 @@ public class WatchDirThread extends Thread{
                                 throw new RuntimeException(e);
                             }
                             this.program.setListCompany(
-                                    new ListCompany(this.program.getCsvMiner().readCompaniesFromFile(""))
+                                    new ListCompany(this.program.getCsvMiner().readCompaniesFromFile(this.program.getPath().toFile()))
                             );
 
-                            System.out.println("\ndata has been ReImported");
                             break;
                         }
                         case "ENTRY_DELETE" -> {
@@ -166,7 +166,7 @@ public class WatchDirThread extends Thread{
     @Override
     public void run() {
         super.run();
-        this.processEvents();
         System.out.println("\nMonitoring...");
+        this.processEvents();
     }
 }

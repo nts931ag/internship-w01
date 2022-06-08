@@ -21,8 +21,8 @@ public class Program {
     }
 
     public void start(){
-        Scanner sc = new Scanner(System.in);
-        int choice;
+        var sc = new Scanner(System.in);
+        var choice= -99;
         boolean stop = false;
         while(this.getState() != null){
             switch (this.getState()){
@@ -31,7 +31,11 @@ public class Program {
                     System.out.println("1. Import\t 2. Exit");
                     choice = sc.nextInt();
                     if(choice == 1){
-                        state.onImport();
+//                        state.onImport();
+                        sc.nextLine();
+                        System.out.print("Enter path to filename (ex: C:\\User\\app\\myFile.csv): ");
+                        String pathFile = sc.nextLine();
+                        state.onImport(pathFile);
                     }else{
                         System.out.println(state.onExit());
                     }
@@ -68,6 +72,10 @@ public class Program {
 
     public Path getPath() {
         return path;
+    }
+
+    public void setPath(Path path) {
+        this.path = path;
     }
 
     public String getDelimeter() {

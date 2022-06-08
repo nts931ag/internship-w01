@@ -5,8 +5,8 @@ import com.elca.app.exercise.model.CsvMiner;
 import com.elca.app.exercise.model.ListCompany;
 import com.elca.app.exercise.model.Program;
 
+import java.nio.file.Paths;
 import java.util.List;
-import java.util.Scanner;
 
 public class EmptyState extends State{
 
@@ -26,18 +26,17 @@ public class EmptyState extends State{
     }
 
     @Override
-    public String onImport() {
-        Scanner sc = new Scanner(System.in);
-        CsvMiner csvMiner = this.program.getCsvMiner();
-        System.out.print("Enter your file name: ");
-        String fileName = sc.nextLine();
-        List<Company> listCompany = csvMiner.readCompaniesFromFile(fileName);
+    public String onImport(String filePath) {
+        var csvMiner = this.program.getCsvMiner();
+        this.program.setPath(Paths.get(filePath));
+        var listCompany = csvMiner.readCompaniesFromFile(this.program.getPath().toFile());
+
         if(listCompany != null){
             this.program.setListCompany(new ListCompany(listCompany));
-            csvMiner.setPath(csvMiner.getPath().resolve(fileName));
             this.program.setState(new ImportedState(this.program));
             return "data has been imported";
         }
+
         return "Import fail!!!";
     }
 

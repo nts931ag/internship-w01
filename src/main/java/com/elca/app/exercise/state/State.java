@@ -11,5 +11,5 @@ public abstract class State {
 
     public abstract String onManipulate();
     public abstract String onExit();
-    public abstract String onImport();
+    public abstract String onImport(String filePath);
 }

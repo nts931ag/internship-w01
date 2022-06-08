@@ -3,6 +3,7 @@ package com.elca.app.exercise.template;
 
 import com.elca.app.exercise.model.Company;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -21,18 +22,17 @@ public abstract class DataMiner {
         this.delimeter = delimeter;
     }
 
-    public List<Company> readCompaniesFromFile(String fileName){
+    public List<Company> readCompaniesFromFile(File file){
 
-        List<Company> lstCompany = new ArrayList<>();
+        List<Company> lstCompany = null;
 
-        try(BufferedReader br = new BufferedReader(new FileReader(path.toString()+"\\"+fileName));){
+        try(BufferedReader br = new BufferedReader(new FileReader(file));){
             lstCompany = handleData(br);
 
         }catch (IOException ioe){
             System.out.println("File is not existed");
             return null;
         }
-
         return lstCompany;
     }
 
