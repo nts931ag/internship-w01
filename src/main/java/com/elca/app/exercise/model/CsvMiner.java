@@ -11,6 +11,9 @@ public class CsvMiner extends DataMiner {
 
     private static CsvMiner instance;
 
+    private CsvMiner(){
+        super();
+    }
     private CsvMiner(Path path, String delimeter){
         super(path, delimeter);
     }
@@ -23,8 +26,8 @@ public class CsvMiner extends DataMiner {
     }
 
     @Override
-    public List<Company> handleData(BufferedReader br) {
-        return br.lines().skip(1).map(mapToItem).collect(Collectors.toList());
+    synchronized public List<Company> handleData(BufferedReader br) {
+        return br.lines().parallel().skip(1).map(mapToItem).collect(Collectors.toList());
     }
 
     private Function<String, Company> mapToItem = (line) -> {

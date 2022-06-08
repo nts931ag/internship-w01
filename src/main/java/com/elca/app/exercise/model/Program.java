@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Program {
     private State state;
     private boolean isImported = false;
-    private final Path path = Paths.get("D:\\Elca-workspace\\internship-w01\\src");
+    private Path path = Paths.get("C:\\Users\\NGUS\\intellij-workspace\\internship-w01\\src");
     private String delimeter = ",";
     private ListCompany listCompany;
     private CsvMiner csvMiner;
@@ -23,8 +23,8 @@ public class Program {
     public void start(){
         Scanner sc = new Scanner(System.in);
         int choice;
-        while(true){
-
+        boolean stop = false;
+        while(this.getState() != null){
             switch (this.getState()){
                 case EmptyState es -> {
                     System.out.print("Your program has not data. Please import data: ");
@@ -41,9 +41,9 @@ public class Program {
                     this.state.onManipulate();
                     break;
                 }
-                default -> {
+                case default -> {
+                    System.out.println("default");
                     break;
-
                 }
             }
         }

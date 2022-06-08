@@ -1,9 +1,11 @@
 package com.elca.app.exercise.state;
 
+import com.elca.app.exercise.model.Company;
 import com.elca.app.exercise.model.CsvMiner;
 import com.elca.app.exercise.model.ListCompany;
 import com.elca.app.exercise.model.Program;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class EmptyState extends State{
@@ -29,10 +31,16 @@ public class EmptyState extends State{
 //        Scanner sc = InputUtils.scanner;
         CsvMiner csvMiner = this.program.getCsvMiner();
         System.out.print("Enter your file name: ");
-        this.program.setListCompany(new ListCompany(csvMiner.readCompaniesFromFile(sc.nextLine() + ".csv")));
-        this.program.setState(new ImportedState(this.program));
+        String fileName = sc.nextLine();
+        List<Company> listCompany = csvMiner.readCompaniesFromFile(fileName);
+        if(listCompany != null){
+            this.program.setListCompany(new ListCompany(listCompany));
+            csvMiner.setPath(csvMiner.getPath().resolve(fileName));
+            this.program.setState(new ImportedState(this.program));
 //        sc.close();
-        return "data has been imported";
+            return "data has been imported";
+        }
+        return "Import fail!!!";
     }
 
 }

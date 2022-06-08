@@ -52,15 +52,16 @@ public class WatchDirThread extends Thread{
         });
     }
 
-    public WatchDirThread(Program program, String fileName, boolean recursive) throws IOException {
+    public WatchDirThread(Program program, boolean recursive) throws IOException {
         this.watcher = FileSystems.getDefault().newWatchService();
         this.keys = new HashMap<WatchKey,Path>();
         this.recursive = recursive;
-        this.fileName = fileName;
         this.program = program;
 
         Path dir = this.program.getPath();
-
+//        this.fileName = this.program.getCsvMiner().getPath().getFileName().toString();
+        this.fileName = this.program.getCsvMiner().getPath().getFileName().toString();
+        System.out.println(fileName);
         if (recursive) {
             System.out.format("Scanning %s ...\n", dir);
             registerAll(dir);
@@ -104,11 +105,18 @@ public class WatchDirThread extends Thread{
                 Path child = dir.resolve(name);
 
                 if(child.getFileName().toString().equals(fileName)){
-                    if(event.kind() == ENTRY_MODIFY){
-                        System.out.println("\ndata has been ReImported");
-                        this.program.setListCompany(
-                                new ListCompany(this.program.getCsvMiner().readCompaniesFromFile(String.valueOf(child.getFileName())))
-                        );
+                    switch (event.kind().toString()){
+                        case "ENTRY_MODIFY" -> {
+                            this.program.setListCompany(
+                                    new ListCompany(this.program.getCsvMiner().readCompaniesFromFile(""))
+                            );
+                            System.out.println("\ndata has been ReImported");
+                            break;
+                        }
+                        case "ENTRY_DELETE" -> {
+
+                            break;
+                        }
                     }
                 }
 
@@ -142,7 +150,6 @@ public class WatchDirThread extends Thread{
             }
         }
 
-        System.out.println("End thread");
     }
 
 

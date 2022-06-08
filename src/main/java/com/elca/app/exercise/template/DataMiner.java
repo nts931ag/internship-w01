@@ -30,10 +30,27 @@ public abstract class DataMiner {
 
         }catch (IOException ioe){
             System.out.println("File is not existed");
+            return null;
         }
 
         return lstCompany;
     }
 
     public abstract List<Company> handleData(BufferedReader br);
+
+    public Path getPath() {
+        return path;
+    }
+
+    public void setPath(Path path) {
+        this.path = path;
+    }
+
+    public String getDelimeter() {
+        return delimeter;
+    }
+
+    public void setDelimeter(String delimeter) {
+        this.delimeter = delimeter;
+    }
 }
