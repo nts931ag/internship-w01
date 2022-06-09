@@ -4,6 +4,7 @@ import com.elca.app.exercise.state.EmptyState;
 import com.elca.app.exercise.state.ImportedState;
 import com.elca.app.exercise.state.State;
 import com.elca.app.exercise.thread.WatchDirThread;
+import com.elca.app.exercise.utils.MyUtils;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -12,8 +13,7 @@ import java.util.Scanner;
 
 public class Program {
     private State state;
-    private boolean isImported = false;
-    private Path path = Paths.get("C:\\Users\\NGUS\\intellij-workspace\\internship-w01\\src");
+    private Path path;
     private String delimeter = ",";
     private ListCompany listCompany;
     private CsvMiner csvMiner;
@@ -23,30 +23,25 @@ public class Program {
         csvMiner = CsvMiner.getInstance(path, delimeter);
     }
 
-    public void start(){
+    public void start() throws IOException {
         var sc = new Scanner(System.in);
         var choice= -99;
         boolean stop = false;
         while(this.getState() != null){
             switch (this.getState()){
                 case EmptyState es -> {
-                    System.out.print("Your program has not data. Please import data: ");
-                    System.out.println("1. Import\t 2. Exit");
+                    MyUtils.logger.info("Your program has not data. Please import data: ");
+                    MyUtils.logger.info("1. Import\t 2. Exit");
                     choice = sc.nextInt();
                     if(choice == 1){
 //                        state.onImport();
                         sc.nextLine();
-                        System.out.print("Enter path to filename (ex: C:\\User\\app\\myFile.csv): ");
+                        MyUtils.logger.info("Enter path to filename (ex: C:\\User\\app\\myFile.csv): ");
                         String pathFile = sc.nextLine();
-                        state.onImport(pathFile);
-
-                        try {
+                        if(state.onImport(pathFile)==true){
                             new WatchDirThread(this,false).start();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
 
-
+                        };
                     }else{
                         System.out.println(state.onExit());
                     }
@@ -71,14 +66,6 @@ public class Program {
 
     public void setState(State state) {
         this.state = state;
-    }
-
-    public boolean isImported() {
-        return isImported;
-    }
-
-    public void setImported(boolean imported) {
-        isImported = imported;
     }
 
     public Path getPath() {

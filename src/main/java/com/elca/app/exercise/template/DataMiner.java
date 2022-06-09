@@ -2,10 +2,13 @@ package com.elca.app.exercise.template;
 
 
 import com.elca.app.exercise.model.Company;
+import com.elca.app.exercise.utils.MyUtils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +32,11 @@ public abstract class DataMiner {
         try(BufferedReader br = new BufferedReader(new FileReader(file));){
             lstCompany = handleData(br);
 
-        }catch (IOException ioe){
-            System.out.println("File is not existed");
+        }catch (NoSuchFileException nfe){
+            MyUtils.logger.error(nfe.getMessage());
+        }
+        catch (IOException ioe){
+            MyUtils.logger.error(ioe.getMessage());
             return null;
         }
         return lstCompany;

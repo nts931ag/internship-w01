@@ -3,6 +3,8 @@ package com.elca.app.exercise.thread;
 import com.elca.app.exercise.model.ListCompany;
 import com.elca.app.exercise.state.EmptyState;
 import com.elca.app.exercise.model.Program;
+import com.elca.app.exercise.utils.MyUtils;
+
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -31,10 +33,10 @@ public class WatchDirThread extends Thread{
         if (trace) {
             Path prev = keys.get(key);
             if (prev == null) {
-                System.out.format("register: %s\n", dir);
+                MyUtils.logger.info("register: %s\n", dir);
             } else {
                 if (!dir.equals(prev)) {
-                    System.out.format("update: %s -> %s\n", prev, dir);
+                    MyUtils.logger.info("update: %s -> %s\n", prev, dir);
                 }
             }
         }
@@ -63,9 +65,9 @@ public class WatchDirThread extends Thread{
         var dir = this.program.getPath().getParent();
         this.fileName = this.program.getPath().getFileName().toString();
         if (recursive) {
-            System.out.format("Scanning %s ...\n", dir);
+            MyUtils.logger.info("Scanning %s ...\n", dir);
             registerAll(dir);
-            System.out.println("Done.");
+            MyUtils.logger.info("Done.");
         } else {
             register(dir);
         }
@@ -84,7 +86,7 @@ public class WatchDirThread extends Thread{
 //                key = watcher.take();
                 key = watcher.poll(25, TimeUnit.MILLISECONDS);
                 if(this.program.getState() == null ){
-                    System.out.println("End thread is watching file: " + this.fileName);
+                    MyUtils.logger.info("End thread is watching file: " + this.fileName);
                     break;
                 }
             } catch (InterruptedException x) {
@@ -94,7 +96,7 @@ public class WatchDirThread extends Thread{
             Path dir = keys.get(key);
             if (dir == null) {
                 if(this.program.getState() instanceof EmptyState ){
-                    System.out.println("End thread is watching file: " + this.fileName);
+                    MyUtils.logger.info( "End thread is watching file: " + this.fileName);
                     break;
                 }
                 continue;
@@ -121,6 +123,7 @@ public class WatchDirThread extends Thread{
                             try {
                                 Thread.sleep(1500);
                             } catch (InterruptedException e) {
+                                MyUtils.logger.error(e.getMessage());
                                 throw new RuntimeException(e);
                             }
 
@@ -164,7 +167,7 @@ public class WatchDirThread extends Thread{
     @Override
     public void run() {
         super.run();
-        System.out.println("\nMonitoring...");
+        MyUtils.logger.info("The program is monitoring on the file has been imported.");
         this.processEvents();
     }
 }

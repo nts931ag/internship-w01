@@ -26,7 +26,7 @@ public class EmptyState extends State{
     }
 
     @Override
-    public String onImport(String filePath) {
+    public boolean onImport(String filePath) {
         var csvMiner = this.program.getCsvMiner();
         this.program.setPath(Paths.get(filePath));
         var listCompany = csvMiner.readCompaniesFromFile(this.program.getPath().toFile());
@@ -34,10 +34,10 @@ public class EmptyState extends State{
         if(listCompany != null){
             this.program.setListCompany(new ListCompany(listCompany));
             this.program.setState(new ImportedState(this.program));
-            return "data has been imported";
+            return true;
         }
 
-        return "Import fail!!!";
+        return false;
     }
 
 }

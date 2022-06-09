@@ -1,13 +1,15 @@
 package com.elca.app.exercise;
 
-import com.elca.app.exercise.model.Program;
 
-import java.io.File;
+import com.elca.app.exercise.model.Program;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
+
 import java.io.IOException;
-import java.nio.file.*;
 
 public class Demo {
-    public static void main(String[] args){
+
+    public static void main(String[] args) throws IOException {
         Program program = new Program();
         program.start();
 
