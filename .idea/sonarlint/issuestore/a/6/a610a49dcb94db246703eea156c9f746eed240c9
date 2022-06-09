@@ -1,21 +1,0 @@
-
-n	java:S135'"YReduce the total number of break and continue statements in this loop to use at most one.(ëÖ” 
-K
-java:S1141#"5Extract this nested try block into a separate method.(Ô‘ÛÀ
-S	java:S106"9Replace this use of System.out or System.err by a logger.(Õ§îşÿÿÿÿ
-N	java:S106"9Replace this use of System.out or System.err by a logger.(¶£õ¾
-h
-java:S3776"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(“–ış
-@
-java:S1181="%Catch Exception instead of Throwable.(‡˜ÚÚøÿÿÿÿ
-y
-java:S2142="^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(‡˜ÚÚøÿÿÿÿ
-t
-java:S2142$"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ç‹¡ƒ
-M	java:S106-"9Replace this use of System.out or System.err by a logger.(àÈ¿.
-S	java:S1060"9Replace this use of System.out or System.err by a logger.(Ø‹‹ûÿÿÿÿ
-U	java:S1066"9Replace this use of System.out or System.err by a logger.(¸€Û•8¦‡§‘”0
-W
-java:S1075C"ARefactor your code to get this URI from a customizable parameter.(¿’Æ
-A
-java:S1068"+Remove this unused "program" private field.(û×Û™

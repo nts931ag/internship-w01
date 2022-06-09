@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 
 public class MyUtils {
-    public static final Logger logger = (Logger) LogManager.getLogger(MyUtils.class);
+    public static final Logger logger = (Logger) LogManager.getLogger(Demo.class);
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
     }

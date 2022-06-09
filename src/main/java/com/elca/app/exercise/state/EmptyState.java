@@ -15,7 +15,7 @@ public class EmptyState extends State{
     }
 
     @Override
-    public String onManipulate() {
+    public String onManipulate(int choice) {
         return "Data has not been imported yet";
     }
 

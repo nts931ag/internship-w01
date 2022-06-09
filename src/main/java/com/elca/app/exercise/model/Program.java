@@ -40,19 +40,26 @@ public class Program {
                         String pathFile = sc.nextLine();
                         if(state.onImport(pathFile)==true){
                             new WatchDirThread(this,false).start();
-
                         };
                     }else{
-                        System.out.println(state.onExit());
+                        MyUtils.logger.info(state.onExit());
                     }
                     break;
                 }
                 case ImportedState is ->{
-                    this.state.onManipulate();
+                    MyUtils.logger.info("----------Exercise 1----------");
+                    MyUtils.logger.info("1. Output to the console the total capital of headquarters located in \"CH\"");
+                    MyUtils.logger.info("2. Output to the console the name of companies that the country is in “CH”. The list is sorted descending by capital.");
+                    MyUtils.logger.info("3. Use your program to re-import the following zip file (companies_big_data.zip). " +
+                            "\n\t\t\tUnzip the file with Windows before importing, your program only needs to handle csv file for now.");
+                    MyUtils.logger.info("4. Print all list company has been imported.");
+                    MyUtils.logger.info("0. Exit the program.");
+                    MyUtils.logger.info("Enter your option: ");
+                    choice = sc.nextInt();
+                    this.state.onManipulate(choice);
                     break;
                 }
                 case default -> {
-                    System.out.println("default");
                     break;
                 }
             }

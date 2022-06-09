@@ -9,7 +9,7 @@ public abstract class State {
         this.program = program;
     }
 
-    public abstract String onManipulate();
+    public abstract String onManipulate(int choice);
     public abstract String onExit();
     public abstract boolean onImport(String filePath);
 }
