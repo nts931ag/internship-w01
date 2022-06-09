@@ -90,6 +90,7 @@ public class WatchDirThread extends Thread{
                     break;
                 }
             } catch (InterruptedException x) {
+                MyUtils.logger.error(x.getMessage());
                 return;
             }
 
@@ -124,7 +125,6 @@ public class WatchDirThread extends Thread{
                                 Thread.sleep(1500);
                             } catch (InterruptedException e) {
                                 MyUtils.logger.error(e.getMessage());
-                                throw new RuntimeException(e);
                             }
 
                             this.program.setListCompany(
@@ -144,7 +144,7 @@ public class WatchDirThread extends Thread{
                             registerAll(child);
                         }
                     } catch (IOException x) {
-                        // ignore to keep sample readbale
+                        MyUtils.logger.error(x.getMessage());
                     }
                 }
             }
